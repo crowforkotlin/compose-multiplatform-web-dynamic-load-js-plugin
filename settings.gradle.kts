@@ -2,7 +2,9 @@ rootProject.name = "KotlinProject"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {
+    includeBuild("compiler-plugin")
     repositories {
+        mavenLocal()
         google {
             mavenContent {
                 includeGroupAndSubgroups("androidx")
@@ -17,6 +19,7 @@ pluginManagement {
 
 dependencyResolutionManagement {
     repositories {
+        mavenLocal()
         google {
             mavenContent {
                 includeGroupAndSubgroups("androidx")
@@ -28,8 +31,7 @@ dependencyResolutionManagement {
     }
 }
 
+
 include(":composeApp")
-include(":compiler-plugin")
-include(":gradle-plugin")
 include(":plugin")
 include(":shared-common")
