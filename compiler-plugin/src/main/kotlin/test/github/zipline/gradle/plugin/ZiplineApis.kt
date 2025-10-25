@@ -10,7 +10,7 @@ import org.jetbrains.kotlin.name.StandardClassIds
  * time: 2025-10-25 17:46:22 下午 星期六
  * @author: crow
  */
-internal class ZiplineApis(
+class ZiplineApis(
     val pluginContext: IrPluginContext
 ) {
     companion object {

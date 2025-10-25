@@ -1,14 +1,12 @@
 package test.github.zipline.gradle.plugin
 
 import org.jetbrains.kotlin.backend.common.IrElementTransformerVoidWithContext
-import org.jetbrains.kotlin.backend.common.ScopeWithIr
 import org.jetbrains.kotlin.backend.common.extensions.IrGenerationExtension
 import org.jetbrains.kotlin.backend.common.extensions.IrPluginContext
 import org.jetbrains.kotlin.cli.common.messages.MessageCollector
 import org.jetbrains.kotlin.ir.IrStatement
 import org.jetbrains.kotlin.ir.declarations.IrClass
 import org.jetbrains.kotlin.ir.declarations.IrModuleFragment
-import org.jetbrains.kotlin.ir.declarations.IrSymbolOwner
 import org.jetbrains.kotlin.ir.expressions.IrCall
 import org.jetbrains.kotlin.ir.expressions.IrExpression
 import org.jetbrains.kotlin.ir.types.getClass
@@ -30,8 +28,12 @@ class ZiplineIrGenerationExtension(
                 val declaration = super.visitClassNew(declaration) as IrClass
                 try {
                     if (declaration.isInterface && declaration.superTypes.any { it.getClass()?.classId == ZiplineApis.ziplineScopedClassId } ) {
-
-
+                        AdapterGenerator(
+                            pluginContext = pluginContext,
+                            ziplineApis = ziplineApis,
+                            scope = currentScope!!,
+                            originalDeclaration = declaration,
+                        ).generateAdapterIfAbsent()
                     }
                 } catch (exception: Exception) {
                     throw Exception(
